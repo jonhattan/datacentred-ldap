@@ -91,33 +91,6 @@ class ldap::client (
 
   include stdlib
 
-  validate_string($uri)
-  validate_string($base)
-  validate_bool($ssl)
-  if $ssl == true {
-    if $ssl_cacertdir {
-      validate_absolute_path($ssl_cacertdir)
-    }
-    validate_absolute_path($ssl_cacert)
-    if $ssl_cert {
-      validate_absolute_path($ssl_cert)
-    }
-    if $ssl_key {
-      validate_absolute_path($ssl_key)
-    }
-    if $ssl_ciphersuite {
-      validate_string($ssl_ciphersuite)
-    }
-    if $ssl_reqcert {
-      validate_re($ssl_reqcert, ['never', 'allow', 'try', 'demand'])
-    }
-  }
-
-  validate_bool($manage_package_dependencies)
-  validate_string($net_ldap_package_name)
-  validate_string($net_ldap_package_ensure)
-  validate_string($net_ldap_package_provider)
-
   anchor { 'ldap::client::begin': } ->
   class { '::ldap::client::install': } ->
   class { '::ldap::client::config': } ->
